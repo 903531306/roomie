@@ -10,8 +10,8 @@ export function formatAppVersion(withPrefix = true) {
 
 // 应用配置
 export const appConfig: AppConfig = {
-  apiBaseUrl: 'https://naughty-kid-ys.cn/QuestionBank1/', // 生产环境替换为实际API地址
-  appId: 'wx1234567890abcdef', // 微信小程序AppID
+  apiBaseUrl: 'https://your-domain.com/QuestionBank1/', // 生产环境替换为实际 API 地址
+  appId: 'wxYOUR_WECHAT_APPID', // 微信小程序 AppID
   version: APP_VERSION
 }
 

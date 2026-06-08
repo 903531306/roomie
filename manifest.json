@@ -1,6 +1,6 @@
 {
     "name" : "Roomie",
-    "appid" : "__UNI__C3DA799",
+    "appid" : "__UNI__YOUR_APPID__",
     "description" : "",
     "versionName" : "2.0.0",
     "versionCode" : "200",
@@ -50,7 +50,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wxd8e4fd0f51f19646",
+        "appid" : "wxYOUR_WECHAT_APPID",
         "setting" : {
             "urlCheck" : false,
             "es6" : true,

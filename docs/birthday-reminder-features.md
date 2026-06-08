@@ -37,17 +37,13 @@
 
 **会跟随主题变色的元素：** 弹窗拖拽条、保存按钮、选中标签、开关、提醒胶囊等。选择后自动保存，下次打开仍生效。
 
-
-
-
+![个性空间换肤](./birthday-reminder-features_files/10ed0f6a-4227-4309-8145-7676910631db.png)
 
 ## 2. 家人生日录入
 
 日程页 **+ → 录入家人生日**，填写称呼，选择公历或农历生日（含闰月），下方实时预览记录规则。支持编辑、删除；弹窗内容可滚动，保存按钮固定底部。
 
-
-
-
+![家人生日列表与录入效果](./birthday-reminder-features_files/250e7410-bfdf-4bf6-b929-e53324f8852a.png)
 
 ## 3. 提醒规则与多渠道
 
@@ -56,25 +52,37 @@
 - **小程序内提醒** → 消息中心推送
 - **微信生日提醒** → 保存时订阅授权，失效可补授权
 
+![提醒规则预览（卡片上的提前天数与时间）](./birthday-reminder-features_files/250e7410-bfdf-4bf6-b929-e53324f8852a.png)
 
-
+![微信小程序码（用于体验与订阅）](./birthday-reminder-features_files/38f27907-795e-4758-b371-b44386cbdfc2.png)
 
 ## 4. 日程页
 
 统一管理家人生日与行程安排：本月生日概览、日历定位、卡片展示提醒状态；未开启提醒可点击编辑。
 
-
-
-
+![日程页 · 生日与行程列表](./birthday-reminder-features_files/250e7410-bfdf-4bf6-b929-e53324f8852a.png)
 
 ## 5. 消息中心
 
 提醒到期后以独立卡片展示，区分生日（查看 / 稍后提醒）与日程（查看 / 标为已读）。
 
+![消息中心 · 生日提醒卡片](./birthday-reminder-features_files/94744730-4470-434e-ad7a-14d82f0cac76.png)
 
+## 附录 · 更多截图
 
+![清单中心](./birthday-reminder-features_files/a1acdeb3-40e7-4c0e-a5ee-fb80119b47ff.png)
 
+![新建空间](./birthday-reminder-features_files/微信图片_20260204104157_86_49.jpg)
 
+![资产详情](./birthday-reminder-features_files/微信图片_20260204104158_87_49.jpg)
+
+![收支流水](./birthday-reminder-features_files/微信图片_20260204104158_88_49.jpg)
+
+![我的窝 · 家庭资产总览](./birthday-reminder-features_files/微信图片_20260204104159_89_49.jpg)
+
+![首页 · 活跃空间](./birthday-reminder-features_files/微信图片_20260204104200_90_49.jpg)
+
+![记一笔](./birthday-reminder-features_files/微信图片_20260204104831_91_49.jpg)
 
 ## 后续规划
 
