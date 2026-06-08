@@ -70,19 +70,20 @@
 
 ## 附录 · 更多截图
 
-![清单中心](./birthday-reminder-features_files/a1acdeb3-40e7-4c0e-a5ee-fb80119b47ff.png)
+<!-- 附录截图为高分辨率原图，统一限制宽度以便阅读 -->
+<img src="./birthday-reminder-features_files/a1acdeb3-40e7-4c0e-a5ee-fb80119b47ff.png" alt="清单中心" width="280" />
 
-![新建空间](./birthday-reminder-features_files/微信图片_20260204104157_86_49.jpg)
+<img src="./birthday-reminder-features_files/微信图片_20260204104157_86_49.jpg" alt="新建空间" width="280" />
 
-![资产详情](./birthday-reminder-features_files/微信图片_20260204104158_87_49.jpg)
+<img src="./birthday-reminder-features_files/微信图片_20260204104158_87_49.jpg" alt="资产详情" width="280" />
 
-![收支流水](./birthday-reminder-features_files/微信图片_20260204104158_88_49.jpg)
+<img src="./birthday-reminder-features_files/微信图片_20260204104158_88_49.jpg" alt="收支流水" width="280" />
 
-![我的窝 · 家庭资产总览](./birthday-reminder-features_files/微信图片_20260204104159_89_49.jpg)
+<img src="./birthday-reminder-features_files/微信图片_20260204104159_89_49.jpg" alt="我的窝 · 家庭资产总览" width="280" />
 
-![首页 · 活跃空间](./birthday-reminder-features_files/微信图片_20260204104200_90_49.jpg)
+<img src="./birthday-reminder-features_files/微信图片_20260204104200_90_49.jpg" alt="首页 · 活跃空间" width="280" />
 
-![记一笔](./birthday-reminder-features_files/微信图片_20260204104831_91_49.jpg)
+<img src="./birthday-reminder-features_files/微信图片_20260204104831_91_49.jpg" alt="记一笔" width="280" />
 
 ## 后续规划
 
