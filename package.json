@@ -1,0 +1,28 @@
+{
+  "name": "roomie",
+  "version": "2.0.0",
+  "description": "Roomie - 家庭协同小程序",
+  "main": "main.uts",
+  "scripts": {
+    "dev:h5": "cross-env NODE_ENV=development UNI_PLATFORM=h5 vue-cli-service uni-serve",
+    "dev:mp-weixin": "cross-env NODE_ENV=development UNI_PLATFORM=mp-weixin vue-cli-service uni-build --watch",
+    "build:h5": "cross-env NODE_ENV=production UNI_PLATFORM=h5 vue-cli-service uni-build",
+    "build:mp-weixin": "cross-env NODE_ENV=production UNI_PLATFORM=mp-weixin vue-cli-service uni-build"
+  },
+  "dependencies": {
+    "pinia": "^2.1.7",
+    "vue": "^2.7.14"
+  },
+  "devDependencies": {
+    "@dcloudio/vue-cli-plugin-uni": "^2.0.2",
+    "@vue/cli-service": "^4.5.19",
+    "cross-env": "^7.0.3"
+  },
+  "browserslist": [
+    "Android >= 7",
+    "iOS >= 11"
+  ],
+  "uni-app": {
+    "scripts": {}
+  }
+}

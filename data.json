@@ -1,0 +1,12 @@
+{
+	"platfrom":"",//平台
+	"userInfo":null,//用户信息
+	"isLogin":false,//是否登录
+	"vuex_status_bar_height":0,
+	"vuex_custom_bar_height":0,
+	"isSendMsg":true,//是否发送短信
+	"deviceInfo":"",//设备信息
+	"isDevelopment":true,//是否是开发环境
+	"isHome":false, //是否从主界面捡来的
+	"wxType":0 //多个微信小程序id 1是 赤丫霸小程序  0是笑掉牙斗图小程序
+}

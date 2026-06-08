@@ -1,0 +1,282 @@
+{
+	"pages": [
+		// index
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "index",
+				"navigationStyle": "custom"
+			}
+		},
+		 {
+		      "path": "pages/game-scorer/lobby",
+		      "style": {
+		        "navigationBarTitleText": "游戏大厅",
+		        "navigationStyle": "custom",
+		        "disableScroll": true
+		      }
+		    },
+		    {
+		      "path": "pages/game-scorer/room",
+		      "style": {
+		        "navigationBarTitleText": "计分房间",
+		        "navigationStyle": "custom",
+		        "disableScroll": true
+		      }
+		    },
+		// room创建
+		{
+			"path": "pages/create-room/create-room",
+			"style": {
+				"navigationBarTitleText": "Roomie",
+				"navigationStyle": "custom",
+				"backgroundColor": "#EEF2FF"
+			}
+		},
+		{
+			"path": "pages/lucky-wheel/slot-machine",
+			"style": {
+				"navigationBarTitleText": "老虎机",
+				"navigationStyle": "custom",
+				"backgroundColor": "#FFFFFF"
+			}
+		},
+		{
+			"path": "pages/copy-generator/copy-generator",
+			"style": {
+				"navigationBarTitleText": "老虎机",
+				"navigationStyle": "custom",
+				"backgroundColor": "#FFFFFF"
+			}
+		},
+		{
+			"path": "pages/emoji-search/emoji-search",
+			"style": {
+				"navigationBarTitleText": "表情搜索",
+				"navigationStyle": "custom",
+				"backgroundColor": "#FFFFFF"
+			}
+		},
+		 {
+		      "path": "pages/wallpaper-gallery/wallpaper-gallery",
+		      "style": {
+		        "navigationBarTitleText": "壁纸画廊",
+		        "navigationStyle": "custom",
+		        "disableScroll": true
+		      }
+		    },
+		{
+		      "path": "pages/lucky-wheel/finger-chooser",
+		      "style": {
+		        "navigationBarTitleText": "指尖选择",
+		        "navigationStyle": "custom",
+		        "disableScroll": true
+		      }
+		    },
+			{
+			      "path": "pages/lucky-wheel/dice",
+			      "style": {
+			        "navigationBarTitleText": "摇骰子",
+			        "navigationStyle": "custom",
+			        "disableScroll": true
+			      }
+			    },
+			{
+			      "path": "pages/lucky-wheel/card-flip",
+			      "style": {
+			        "navigationBarTitleText": "幸运翻牌",
+			        "navigationStyle": "custom",
+			        "disableScroll": true
+			      }
+			    },
+			{
+			      "path": "pages/report/monthly-report",
+			      "style": {
+			        "navigationBarTitleText": "月度账单",
+			        "navigationStyle": "custom",
+			        "disableScroll": true
+			      }
+			    },
+		    {
+		      "path": "pages/lucky-wheel/numeric-bomb",
+		      "style": {
+		        "navigationBarTitleText": "数字炸弹",
+		        "navigationStyle": "custom"
+		      }
+		    },
+			 {
+			      "path": "pages/report/weekly-report",
+			      "style": {
+			        "navigationBarTitleText": "本周回顾",
+			        "navigationStyle": "custom",
+			        "disableScroll": true
+			      }
+			    },
+		{
+		      "path": "pages/lucky-wheel/customize-wheel",
+		      "style": {
+		        "navigationBarTitleText": "管理选项",
+		        "navigationStyle": "custom"
+		      }
+		    },
+		{
+		      "path": "pages/share-poster/share-poster",
+		      "style": {
+		        "navigationBarTitleText": "分享空间状态",
+		        "navigationStyle": "custom"
+		      }
+		    },{
+		      "path": "pages/order/order",
+		      "style": {
+		        "navigationBarTitleText": "订单",
+		        "navigationStyle": "custom"
+		      }
+		    },
+		 {
+		      "path": "pages/lucky-wheel/lucky-wheel",
+		      "style": {
+		        "navigationBarTitleText": "决策轮盘",
+		        "navigationStyle": "custom"
+		      }
+		    },
+		{
+		      "path": "pages/member-management/member-management",
+		      "style": {
+		        "navigationBarTitleText": "成员权限管理",
+		        "navigationStyle": "custom"
+		      }
+		    },
+		//个人资料
+		{
+		      "path": "pages/profile-settings/profile-settings",
+		      "style": {
+		        "navigationBarTitleText": "个人资料",
+		        "navigationStyle": "custom"
+		      }
+		    },
+			{
+			      "path": "pages/notifications/notifications",
+			      "style": {
+			        "navigationBarTitleText": "消息中心",
+			        "navigationStyle": "custom"
+			      }
+			    },
+		// 启动页
+		{
+			"path": "pages/splash/splash",
+			"style": {
+				"navigationBarTitleText": "Roomie",
+				"navigationStyle": "custom",
+				"backgroundColor": "#FFFFFF"
+			}
+		},
+		 {
+		      "path": "pages/ledger-all/ledger-all",
+		      "style": {
+		        "navigationBarTitleText": "收支流水",
+		        "navigationStyle": "custom"
+		      }
+		    },
+			//任务更多列表
+			{
+			     "path": "pages/checklist-center/checklist-center",
+			     "style": {
+			       "navigationBarTitleText": "清单中心",
+			       "navigationStyle": "custom"
+			     }
+			   },
+		// 登录页
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationStyle": "custom"
+			}
+		},
+		
+		//资产详情
+		{
+		      "path": "pages/asset-details/asset-details",
+		      "style": {
+		        "navigationBarTitleText": "资产详情",
+		        "navigationStyle": "custom"
+		      }
+		},
+		//首页详情页
+		{
+			"path": "pages/dashboard/dashboard",
+			"style": {
+				"navigationBarTitleText": "详情",
+				"navigationStyle": "custom"
+			}
+		},
+		//家庭列表
+		{
+			"path": "pages/room-list/room-list",
+			"style": {
+				"navigationBarTitleText": "详情",
+				"navigationStyle": "custom"
+			}
+		},
+		//添加记账
+		{
+			"path": "pages/add-entry/add-entry",
+			"style": {
+				"navigationBarTitleText": "添加记账",
+				"navigationStyle": "custom"
+			}
+		},
+		// 同屋选择页
+		{
+			"path": "pages/room-select/room-select",
+			"style": {
+				"navigationBarTitleText": "选择同屋",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"backgroundColor": "#F5F5F5"
+			}
+		},
+		// 主页（底部Tab）
+		{
+			"path": "pages/home/home",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"backgroundColor": "#F5F5F5"
+			}
+		},
+		{
+		      "path": "pages/wealth-stats/wealth-stats",
+		      "style": {
+		        "navigationBarTitleText": "财富统计",
+		        "navigationStyle": "custom"
+		      }
+		    },
+		{
+		      "path": "pages/version-history/version-history",
+		      "style": {
+		        "navigationBarTitleText": "版本记录",
+		        "navigationStyle": "custom"
+		      }
+		    },
+		// 个人中心页
+		{
+			"path": "pages/profile/profile",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"backgroundColor": "#F5F5F5"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#F5F5F5",
+		"backgroundColorBottom": "#F5F5F5",
+		"app-plus": {
+			"background": "#F5F5F5"
+		}
+	},
+	"uniIdRouter": {}
+}

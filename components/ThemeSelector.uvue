@@ -1,0 +1,742 @@
+<template>
+  <view class="theme-selector">
+    <!-- 主题网格 -->
+    <view class="themes-grid">
+      <view
+        v-for="theme in availableThemes || []"
+        :key="theme.id"
+        class="theme-card"
+        :class="{ 'theme-selected': theme.id === currentTheme.id }"
+        :style="getThemeCardStyle(theme)"
+        @click="selectTheme(theme)"
+      >
+        <!-- 主题预览区域 -->
+        <view class="theme-preview" :style="getThemePreviewStyle(theme)">
+          <!-- 模拟的UI元素 -->
+          <view class="preview-header" :style="{ backgroundColor: theme.primaryColor }">
+            <view class="preview-nav-dots">
+              <view class="nav-dot"></view>
+              <view class="nav-dot"></view>
+              <view class="nav-dot"></view>
+            </view>
+          </view>
+
+          <view class="preview-content">
+            <view class="preview-card" :style="{ backgroundColor: theme.cardBackground, borderColor: theme.borderColor }">
+              <view class="preview-title" :style="{ color: theme.textColor }">任务标题</view>
+              <view class="preview-desc" :style="{ color: theme.textColor, opacity: 0.7 }">任务描述内容</view>
+            </view>
+
+            <view class="preview-button" :style="{ backgroundColor: theme.primaryColor }"></view>
+          </view>
+        </view>
+
+        <!-- 主题信息 -->
+        <view class="theme-info">
+          <text class="theme-name">{{ theme.name }}</text>
+          <view v-if="theme.id === currentTheme.id" class="selected-indicator">
+            <text class="selected-text">当前使用</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 自定义主题区域 -->
+    <view class="custom-theme-section">
+      <view class="section-header">
+        <text class="section-title">自定义主题</text>
+        <CustomButton
+          text="创建主题"
+          type="outline"
+          size="small"
+          icon="+"
+          @click="showCreateThemeModal"
+        />
+      </view>
+
+      <view v-if="customThemes.length === 0" class="empty-custom">
+        <text class="empty-text">还没有自定义主题</text>
+        <text class="empty-desc">创建专属的个性化主题</text>
+      </view>
+
+      <view v-else class="custom-themes-list">
+        <view
+          v-for="theme in customThemes || []"
+          :key="theme.id"
+          class="custom-theme-item"
+          :style="{ backgroundColor: theme.cardBackground, borderColor: theme.borderColor }"
+        >
+          <view class="custom-theme-preview">
+            <view
+              class="color-sample"
+              :style="{ backgroundColor: theme.primaryColor }"
+            ></view>
+            <text class="custom-theme-name">{{ theme.name }}</text>
+          </view>
+
+          <view class="custom-theme-actions">
+            <button class="action-btn edit" @click="editCustomTheme(theme)">编辑</button>
+            <button class="action-btn delete" @click="deleteCustomTheme(theme)">删除</button>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 创建/编辑主题弹窗 -->
+    <uni-popup ref="themeEditorPopup" type="bottom">
+      <view class="theme-editor-modal" :style="{ backgroundColor: currentTheme.cardBackground }">
+        <view class="modal-header">
+          <text class="modal-title">{{ isEditing ? '编辑主题' : '创建主题' }}</text>
+          <view class="modal-close" @click="hideThemeEditorModal">✕</view>
+        </view>
+
+        <scroll-view class="modal-content" scroll-y="true">
+          <!-- 主题名称 -->
+          <view class="form-item">
+            <text class="form-label">主题名称</text>
+            <input
+              v-model="editingTheme.name"
+              class="form-input"
+              placeholder="请输入主题名称"
+              maxlength="20"
+              :style="{ borderColor: currentTheme.borderColor }"
+            />
+          </view>
+
+          <!-- 颜色选择器 -->
+          <view class="color-picker-section">
+            <text class="section-title">颜色设置</text>
+
+            <view class="color-item">
+              <text class="color-label">主色调</text>
+              <view class="color-input-group">
+                <input
+                  v-model="editingTheme.primaryColor"
+                  class="color-input"
+                  placeholder="#007AFF"
+                  maxlength="7"
+                  @input="handleColorChange"
+                />
+                <view
+                  class="color-preview"
+                  :style="{ backgroundColor: editingTheme.primaryColor }"
+                ></view>
+              </view>
+            </view>
+
+            <view class="color-item">
+              <text class="color-label">辅助色</text>
+              <view class="color-input-group">
+                <input
+                  v-model="editingTheme.secondaryColor"
+                  class="color-input"
+                  placeholder="#5AC8FA"
+                  maxlength="7"
+                  @input="handleColorChange"
+                />
+                <view
+                  class="color-preview"
+                  :style="{ backgroundColor: editingTheme.secondaryColor }"
+                ></view>
+              </view>
+            </view>
+
+            <view class="color-item">
+              <text class="color-label">背景色</text>
+              <view class="color-input-group">
+                <input
+                  v-model="editingTheme.backgroundColor"
+                  class="color-input"
+                  placeholder="#F5F5F5"
+                  maxlength="7"
+                  @input="handleColorChange"
+                />
+                <view
+                  class="color-preview"
+                  :style="{ backgroundColor: editingTheme.backgroundColor }"
+                ></view>
+              </view>
+            </view>
+
+            <view class="color-item">
+              <text class="color-label">文字色</text>
+              <view class="color-input-group">
+                <input
+                  v-model="editingTheme.textColor"
+                  class="color-input"
+                  placeholder="#333333"
+                  maxlength="7"
+                  @input="handleColorChange"
+                />
+                <view
+                  class="color-preview"
+                  :style="{ backgroundColor: editingTheme.textColor }"
+                ></view>
+              </view>
+            </view>
+          </view>
+
+          <!-- 预设颜色 -->
+          <view class="preset-colors-section">
+            <text class="section-title">预设颜色</text>
+            <view class="preset-colors-grid">
+              <view
+                v-for="color in presetColors"
+                :key="color"
+                class="preset-color-item"
+                :style="{ backgroundColor: color }"
+                @click="applyPresetColor(color)"
+              ></view>
+            </view>
+          </view>
+        </scroll-view>
+
+        <view class="modal-actions">
+          <button class="cancel-btn" @click="hideThemeEditorModal">取消</button>
+          <button
+            class="confirm-btn"
+            :style="{ backgroundColor: currentTheme.primaryColor }"
+            :disabled="!editingTheme.name.trim()"
+            @click="saveTheme"
+          >
+            {{ isEditing ? '保存' : '创建' }}
+          </button>
+        </view>
+      </view>
+    </uni-popup>
+  </view>
+</template>
+
+<script setup lang="ts">
+import { ref, computed, reactive, onMounted, watch } from 'vue'
+import { useThemeStore } from '@/store/theme'
+import type { Theme } from '@/types'
+import CustomButton from './CustomButton.uvue'
+
+interface Props {
+  showCustomThemes?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  showCustomThemes: true
+})
+
+const emit = defineEmits<{
+  close: []
+}>()
+
+const themeStore = useThemeStore()
+const themeEditorPopup = ref()
+
+// 响应式数据
+const isEditing = ref(false)
+const editingTheme = reactive<Partial<Theme>>({
+  name: '',
+  primaryColor: '#007AFF',
+  secondaryColor: '#5AC8FA',
+  backgroundColor: '#F5F5F5',
+  textColor: '#333333',
+  cardBackground: '#FFFFFF',
+  borderColor: '#E5E5E5'
+})
+
+// 预设颜色
+const presetColors = [
+  '#007AFF', '#FF6B35', '#10B981', '#8B5CF6',
+  '#F59E0B', '#EF4444', '#06B6D4', '#84CC16',
+  '#EC4899', '#6366F1', '#14B8A6', '#F97316'
+]
+
+// 计算属性
+const currentTheme = computed(() => themeStore.currentThemeInfo || {})
+const availableThemes = computed(() => {
+  const allThemes = themeStore.allThemes || []
+  return Array.isArray(allThemes) ? allThemes.filter(t => !t?.id?.startsWith?.('custom_')) : []
+})
+const customThemes = computed(() => {
+  const custom = themeStore.customThemes
+  return Array.isArray(custom) ? custom : []
+})
+
+// 方法
+const getThemeCardStyle = (theme: Theme) => ({
+  borderColor: theme.id === currentTheme.value.id ? theme.primaryColor : theme.borderColor
+})
+
+const getThemePreviewStyle = (theme: Theme) => ({
+  backgroundColor: theme.backgroundColor
+})
+
+const selectTheme = (theme: Theme) => {
+  themeStore.switchTheme(theme.id)
+}
+
+const showCreateThemeModal = () => {
+  isEditing.value = false
+  resetEditingTheme()
+  themeEditorPopup.value.open()
+}
+
+const editCustomTheme = (theme: Theme) => {
+  isEditing.value = true
+  Object.assign(editingTheme, theme)
+  themeEditorPopup.value.open()
+}
+
+const deleteCustomTheme = async (theme: Theme) => {
+  const result = await uni.showModal({
+    title: '确认删除',
+    content: `确定要删除主题"${theme.name}"吗？`,
+    confirmText: '删除',
+    confirmColor: '#FF4444'
+  })
+
+  if (result.confirm) {
+    themeStore.deleteCustomTheme(theme.id)
+  }
+}
+
+const hideThemeEditorModal = () => {
+  themeEditorPopup.value.close()
+}
+
+const resetEditingTheme = () => {
+  editingTheme.name = ''
+  editingTheme.primaryColor = '#007AFF'
+  editingTheme.secondaryColor = '#5AC8FA'
+  editingTheme.backgroundColor = '#F5F5F5'
+  editingTheme.textColor = '#333333'
+  editingTheme.cardBackground = '#FFFFFF'
+  editingTheme.borderColor = '#E5E5E5'
+}
+
+const handleColorChange = () => {
+  // 自动计算相关颜色
+  if (editingTheme.primaryColor) {
+    editingTheme.borderColor = editingTheme.primaryColor + '20' // 添加透明度
+  }
+}
+
+const applyPresetColor = (color: string) => {
+  editingTheme.primaryColor = color
+  handleColorChange()
+}
+
+const saveTheme = () => {
+  if (!editingTheme.name?.trim()) {
+    uni.showToast({
+      title: '请输入主题名称',
+      icon: 'none'
+    })
+    return
+  }
+
+  try {
+    const themeData: Omit<Theme, 'id'> = {
+      name: editingTheme.name,
+      primaryColor: editingTheme.primaryColor || '#007AFF',
+      secondaryColor: editingTheme.secondaryColor || '#5AC8FA',
+      backgroundColor: editingTheme.backgroundColor || '#F5F5F5',
+      textColor: editingTheme.textColor || '#333333',
+      cardBackground: editingTheme.cardBackground || '#FFFFFF',
+      borderColor: editingTheme.borderColor || '#E5E5E5'
+    }
+
+    if (isEditing.value && editingTheme.id) {
+      themeStore.updateCustomTheme(editingTheme.id, themeData)
+      uni.showToast({
+        title: '主题更新成功',
+        icon: 'success'
+      })
+    } else {
+      const newTheme = themeStore.createCustomTheme(themeData)
+      uni.showToast({
+        title: '主题创建成功',
+        icon: 'success'
+      })
+      // 自动应用新创建的主题
+      themeStore.switchTheme(newTheme.id)
+    }
+
+    hideThemeEditorModal()
+  } catch (error) {
+    console.error('保存主题失败:', error)
+    uni.showToast({
+      title: '保存失败，请重试',
+      icon: 'none'
+    })
+  }
+}
+
+// 监听主题变化
+watch(currentTheme, (newTheme) => {
+  console.log('ThemeSelector: 主题已切换到', newTheme?.name)
+})
+
+// 组件挂载
+onMounted(() => {
+  // 确保store已经初始化
+  if (!themeStore) {
+    console.error('Theme store not initialized')
+  }
+
+  // 监听全局主题变化事件
+  if (typeof uni !== 'undefined') {
+    uni.$on('theme-changed', (theme: Theme) => {
+      console.log('ThemeSelector 收到全局主题变化:', theme.name)
+    })
+  }
+})
+</script>
+
+<style scoped>
+.theme-selector {
+  padding: 20rpx;
+}
+
+/* 主题网格 */
+.themes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+  margin-bottom: 40rpx;
+}
+
+.theme-card {
+  border: 2rpx solid transparent;
+  border-radius: 16rpx;
+  overflow: hidden;
+  background: #FFFFFF;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.theme-card:active {
+  transform: scale(0.95);
+}
+
+.theme-selected {
+  border-color: currentColor;
+  box-shadow: 0 4rpx 16rpx rgba(0,122,255,0.2);
+}
+
+.theme-preview {
+  height: 200rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+.preview-header {
+  height: 60rpx;
+  position: relative;
+}
+
+.preview-nav-dots {
+  position: absolute;
+  bottom: 10rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6rpx;
+}
+
+.nav-dot {
+  width: 6rpx;
+  height: 6rpx;
+  background: rgba(255,255,255,0.6);
+  border-radius: 50%;
+}
+
+.preview-content {
+  padding: 20rpx;
+  height: calc(100% - 60rpx);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.preview-card {
+  padding: 16rpx;
+  border: 1rpx solid;
+  border-radius: 8rpx;
+  margin-bottom: 12rpx;
+}
+
+.preview-title {
+  font-size: 24rpx;
+  font-weight: 500;
+  margin-bottom: 6rpx;
+}
+
+.preview-desc {
+  font-size: 20rpx;
+}
+
+.preview-button {
+  height: 32rpx;
+  border-radius: 4rpx;
+  align-self: flex-start;
+  width: 60rpx;
+}
+
+.theme-info {
+  padding: 16rpx;
+  text-align: center;
+}
+
+.theme-name {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 8rpx;
+}
+
+.selected-indicator {
+  background: #007AFF;
+  border-radius: 12rpx;
+  padding: 4rpx 12rpx;
+  display: inline-block;
+}
+
+.selected-text {
+  font-size: 20rpx;
+  color: #FFFFFF;
+}
+
+/* 自定义主题区域 */
+.custom-theme-section {
+  border-top: 1rpx solid #E5E5E5;
+  padding-top: 30rpx;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.empty-custom {
+  text-align: center;
+  padding: 60rpx 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #666666;
+  margin-bottom: 8rpx;
+}
+
+.empty-desc {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.custom-themes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.custom-theme-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx;
+  border: 1rpx solid;
+  border-radius: 12rpx;
+}
+
+.custom-theme-preview {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.color-sample {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 6rpx;
+  margin-right: 16rpx;
+  border: 1rpx solid #E5E5E5;
+}
+
+.custom-theme-name {
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.custom-theme-actions {
+  display: flex;
+  gap: 12rpx;
+}
+
+.action-btn {
+  padding: 8rpx 16rpx;
+  border-radius: 6rpx;
+  font-size: 24rpx;
+  border: none;
+}
+
+.action-btn.edit {
+  background: #007AFF;
+  color: #FFFFFF;
+}
+
+.action-btn.delete {
+  background: #FF4444;
+  color: #FFFFFF;
+}
+
+/* 主题编辑弹窗 */
+.theme-editor-modal {
+  border-radius: 20rpx 20rpx 0 0;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #E5E5E5;
+  flex-shrink: 0;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.modal-close {
+  font-size: 36rpx;
+  color: #999999;
+  padding: 10rpx;
+}
+
+.modal-content {
+  flex: 1;
+  padding: 30rpx;
+}
+
+.form-item {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  font-size: 28rpx;
+  color: #333333;
+  margin-bottom: 12rpx;
+  display: block;
+}
+
+.form-input {
+  width: 100%;
+  height: 72rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+/* 颜色选择器 */
+.color-picker-section {
+  margin-bottom: 40rpx;
+}
+
+.color-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.color-label {
+  width: 120rpx;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.color-input-group {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.color-input {
+  flex: 1;
+  height: 60rpx;
+  padding: 0 16rpx;
+  border: 1rpx solid #E5E5E5;
+  border-radius: 6rpx;
+  font-size: 26rpx;
+  font-family: monospace;
+}
+
+.color-preview {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 6rpx;
+  border: 1rpx solid #E5E5E5;
+}
+
+/* 预设颜色 */
+.preset-colors-section {
+  margin-bottom: 30rpx;
+}
+
+.preset-colors-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12rpx;
+  margin-top: 16rpx;
+}
+
+.preset-color-item {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 8rpx;
+  border: 1rpx solid #E5E5E5;
+  cursor: pointer;
+}
+
+.preset-color-item:active {
+  transform: scale(0.9);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 20rpx;
+  padding: 30rpx;
+  border-top: 1rpx solid #E5E5E5;
+  flex-shrink: 0;
+}
+
+.cancel-btn {
+  flex: 1;
+  height: 80rpx;
+  border: 1rpx solid #E5E5E5;
+  border-radius: 8rpx;
+  background: #FFFFFF;
+  color: #666666;
+  font-size: 32rpx;
+}
+
+.confirm-btn {
+  flex: 1;
+  height: 80rpx;
+  border: none;
+  border-radius: 8rpx;
+  color: #FFFFFF;
+  font-size: 32rpx;
+}
+</style>

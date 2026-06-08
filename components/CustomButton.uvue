@@ -1,0 +1,232 @@
+<template>
+  <button
+    class="custom-button"
+    :class="buttonClass"
+    :style="buttonStyle"
+    :disabled="disabled || loading"
+    :loading="loading"
+    @click="handleClick"
+  >
+    <view :class="themeClass" v-if="loading" class="loading-spinner">
+      <view class="spinner"></view>
+    </view>
+    <view v-else-if="icon" class="button-icon">
+      <text class="icon-text">{{ icon }}</text>
+    </view>
+    <text class="button-text">{{ text }}</text>
+  </button>
+</template>
+
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useThemeStore } from '@/store/theme'
+
+interface Props {
+  text: string
+  type?: 'primary' | 'secondary' | 'outline' | 'ghost'
+  size?: 'small' | 'medium' | 'large'
+  icon?: string
+  loading?: boolean
+  disabled?: boolean
+  block?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  type: 'primary',
+  size: 'medium',
+  loading: false,
+  disabled: false,
+  block: false
+})
+
+const emit = defineEmits<{
+  click: []
+}>()
+
+const themeStore = useThemeStore()
+
+// 计算属性
+const currentTheme = computed(() => themeStore.currentThemeInfo)
+
+const buttonClass = computed(() => [
+  `button-${props.type}`,
+  `button-${props.size}`,
+  {
+    'button-block': props.block,
+    'button-loading': props.loading,
+    'button-disabled': props.disabled
+  }
+])
+
+const buttonStyle = computed(() => {
+  const baseStyle: Record<string, any> = {}
+
+  switch (props.type) {
+    case 'primary':
+      baseStyle.backgroundColor = currentTheme.value.primaryColor
+      baseStyle.borderColor = currentTheme.value.primaryColor
+      baseStyle.color = '#FFFFFF'
+      break
+    case 'secondary':
+      baseStyle.backgroundColor = currentTheme.value.secondaryColor
+      baseStyle.borderColor = currentTheme.value.secondaryColor
+      baseStyle.color = '#FFFFFF'
+      break
+    case 'outline':
+      baseStyle.backgroundColor = 'transparent'
+      baseStyle.borderColor = currentTheme.value.primaryColor
+      baseStyle.color = currentTheme.value.primaryColor
+      break
+    case 'ghost':
+      baseStyle.backgroundColor = 'transparent'
+      baseStyle.borderColor = 'transparent'
+      baseStyle.color = currentTheme.value.primaryColor
+      break
+  }
+
+  return baseStyle
+})
+
+// 事件处理
+const handleClick = () => {
+  if (!props.disabled && !props.loading) {
+    emit('click')
+  }
+}
+</script>
+
+<style scoped>
+.custom-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1rpx solid;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-button:not(.button-disabled):not(.button-loading):active {
+  transform: scale(0.95);
+  opacity: 0.8;
+}
+
+/* 按钮类型样式 */
+.button-primary {
+  background-color: #007AFF;
+  border-color: #007AFF;
+  color: #FFFFFF;
+}
+
+.button-secondary {
+  background-color: #5AC8FA;
+  border-color: #5AC8FA;
+  color: #FFFFFF;
+}
+
+.button-outline {
+  background-color: transparent;
+  border-color: #007AFF;
+  color: #007AFF;
+}
+
+.button-ghost {
+  background-color: transparent;
+  border-color: transparent;
+  color: #007AFF;
+}
+
+/* 按钮尺寸样式 */
+.button-small {
+  height: 60rpx;
+  padding: 0 24rpx;
+  font-size: 24rpx;
+}
+
+.button-medium {
+  height: 72rpx;
+  padding: 0 32rpx;
+  font-size: 28rpx;
+}
+
+.button-large {
+  height: 88rpx;
+  padding: 0 40rpx;
+  font-size: 32rpx;
+}
+
+/* 块级按钮 */
+.button-block {
+  width: 100%;
+}
+
+/* 加载状态 */
+.button-loading {
+  opacity: 0.7;
+}
+
+.loading-spinner {
+  margin-right: 12rpx;
+  display: flex;
+  align-items: center;
+}
+
+.spinner {
+  width: 24rpx;
+  height: 24rpx;
+  border: 2rpx solid rgba(255,255,255,0.3);
+  border-top: 2rpx solid #FFFFFF;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 禁用状态 */
+.button-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 图标样式 */
+.button-icon {
+  margin-right: 8rpx;
+}
+
+.icon-text {
+  font-size: 28rpx;
+  line-height: 1;
+}
+
+/* 按钮文字 */
+.button-text {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* 响应式设计 */
+@media screen and (max-width: 750rpx) {
+  .button-small {
+    height: 56rpx;
+    padding: 0 20rpx;
+    font-size: 22rpx;
+  }
+
+  .button-medium {
+    height: 68rpx;
+    padding: 0 28rpx;
+    font-size: 26rpx;
+  }
+
+  .button-large {
+    height: 80rpx;
+    padding: 0 36rpx;
+    font-size: 30rpx;
+  }
+}
+</style>
