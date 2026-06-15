@@ -177,6 +177,13 @@
 		        "navigationStyle": "custom"
 		      }
 		    },
+		    {
+		      "path": "pages/ledger-import/ledger-import",
+		      "style": {
+		        "navigationBarTitleText": "账单导入",
+		        "navigationStyle": "custom"
+		      }
+		    },
 			//任务更多列表
 			{
 			     "path": "pages/checklist-center/checklist-center",

@@ -5,7 +5,7 @@
       <view class="ambient-blob blob-primary"></view>
       <view class="ambient-blob blob-secondary"></view>
     </view>
-    <IosNav title="收支流水" @leftClick="goBack" />
+    <IosNav title="收支流水" @leftClick="goBack" :rightText="isLocked() ? '' : '导入'" @rightClick="goToImport" />
 
     <!-- 顶部固定筛选与汇总区 -->
     <view class="sticky-header">
@@ -666,6 +666,12 @@ const onDelete = (item) => {
 
 const goBack = () => uni.navigateBack();
 const goToAdd = () => uni.navigateTo({ url: '/pages/add-entry/add-entry?roomId='+roomId.value+"&accountId="+accountId.value });
+const goToImport = () => {
+  if (isLocked()) return;
+  uni.navigateTo({
+    url: `/pages/ledger-import/ledger-import?roomId=${roomId.value}&accountId=${accountId.value}`
+  });
+};
 </script>
 
 <style scoped>

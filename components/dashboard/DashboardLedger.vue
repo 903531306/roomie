@@ -146,7 +146,10 @@
         <text class="section-title">今日收支</text>
         <text class="section-subtitle">仅展示今天 · 更早记录点右侧</text>
       </view>
-      <text class="section-more" @click="lefgerAll">全部/历史 ›</text>
+      <view class="section-actions">
+        <text v-if="canImport" class="section-import" @click="goToImport">导入账单</text>
+        <text class="section-more" @click="lefgerAll">全部/历史 ›</text>
+      </view>
     </view>
 
     <!-- 2. 下方列表区域 -->
@@ -384,6 +387,15 @@ const onSheetTouchEnd = () => {
 const lefgerAll = () => {
   uni.navigateTo({
     url: '/pages/ledger-all/ledger-all?roomId=' + props.roomId+"&accountId="+props.accountId
+  })
+}
+
+const canImport = computed(() => props.roomDetail && props.roomDetail.userRole !== 'observer')
+
+const goToImport = () => {
+  if (!canImport.value) return
+  uni.navigateTo({
+    url: `/pages/ledger-import/ledger-import?roomId=${props.roomId}&accountId=${props.accountId}`
   })
 }
 
@@ -915,6 +927,13 @@ const handleDelete = () => {
   line-height: 1.3;
 }
 .section-more { font-size: 12px; font-weight: 800; color: var(--primary-color, #4F46E5); }
+.section-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.section-import { font-size: 12px; font-weight: 800; color: #64748B; }
 
 .activity-list { background: #fff; border-radius: 32px; padding: 8px; border: 1px solid #F1F5F9; }
 .act-item { display: flex; align-items: center; padding: 16px; border-bottom: 1px solid #F8FAFC; transition: background 0.2s; }

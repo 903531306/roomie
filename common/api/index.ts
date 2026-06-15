@@ -143,6 +143,38 @@ export const roomApi = {
   }
 }
 
+// 账单导入 API
+export const ledgerImportApi = {
+  /** 上传账单文件并预览（不入库） */
+  preview: (
+    filePath: string,
+    roomId: string | number,
+    accountId: string | number
+  ): Promise<ApiResponse<Record<string, unknown>>> => {
+    return http.upload(
+      API_PATHS.LEDGER_IMPORT_PREVIEW,
+      filePath,
+      { roomId: String(roomId), accountId: String(accountId) },
+      { showLoading: true, showError: false }
+    )
+  },
+
+  /** 确认导入勾选的行 */
+  confirm: (data: Record<string, unknown>): Promise<ApiResponse<Record<string, unknown>>> => {
+    return http.post(API_PATHS.LEDGER_IMPORT_CONFIRM, data, { showLoading: true, showError: false })
+  },
+
+  /** 分类树（按 income/expense） */
+  getCategoryTree: (type: 'income' | 'expense'): Promise<ApiResponse<unknown[]>> => {
+    return http.get(API_PATHS.LEDGER_CATEGORY_TREE, { type }, { showError: false })
+  },
+
+  /** 支付方式列表 */
+  getPayMethods: (): Promise<ApiResponse<unknown[]>> => {
+    return http.get(API_PATHS.LEDGER_CATEOGER_LIST, { type: 'transfer' })
+  }
+}
+
 //类型相关
 export const typeApi={
 	// 获取所有系统功能
@@ -417,7 +449,8 @@ export const api = {
   feed: feedApi,
   upload: uploadApi,
   type:typeApi,
-  notifications:notificationsApi
+  notifications:notificationsApi,
+  ledgerImport: ledgerImportApi
 }
 
 export default api

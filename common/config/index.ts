@@ -160,6 +160,10 @@ export const API_PATHS = {
   LEDGER_YEAR_LIST:'/ledger/year',//本年记账明细数据
   LEDGER_GRADP:'/ledger/groupLedgers',//下旬分类下边的明细
   LEDGER_CATEOGER_LIST:'/ledger/category/list',//获取支付分类
+  LEDGER_CATEGORY_TREE:'/ledger/category/tree',//分类树（账单导入改分类）
+  LEDGER_IMPORT_PREVIEW:'/ledger/import/preview',//账单导入预览
+  LEDGER_IMPORT_CONFIRM:'/ledger/import/confirm',//账单导入确认
+  LEDGER_IMPORT_MERCHANT_RULES:'/ledger/import/merchant-rules',//商户分类记忆
   ROOM_LIST:'/room/rooms',//房间列表
   ROOM_JOIN: '/room/join',
   ROOM_ROOMS:'/room/permission/rooms',//room/permission/rooms 获取房间列表
